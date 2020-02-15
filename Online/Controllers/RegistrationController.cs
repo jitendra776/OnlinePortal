@@ -14,7 +14,7 @@ namespace Online.Controllers
         #region Get
         [HttpGet]
         [Route("AllUser")]
-        public HttpResponseMessage User()
+        public  HttpResponseMessage UserDetails()
         {
             using (OnlineEntities2 obj = new OnlineEntities2())
             {
