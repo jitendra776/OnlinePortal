@@ -24,6 +24,23 @@ namespace Online.Controllers
         #endregion
         #region GetBYID
         [HttpGet]
+        [Route("GetUserByContact/{contact}/{password}")]
+        public IHttpActionResult GetUserByContact(int? contact, string password)
+        {
+            using (OnlineEntities2 obj = new OnlineEntities2())
+            {
+                var data = obj.Registrations.FirstOrDefault(x => x.Contact == contact);
+                if (data != null)
+                {
+                    if (data.PassWord == password)
+                    {
+                        return Ok(true);
+                    }
+                }
+                return Ok(false);
+            }
+        }
+        [HttpGet]
         [Route("GetUserByID")]
         public HttpResponseMessage GetUserByID(int id)
         {

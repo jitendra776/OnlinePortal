@@ -17,5 +17,7 @@ namespace DataAcess
         public int ID { get; set; }
         public string Name { get; set; }
         public string PassWord { get; set; }
+        public Nullable<int> Contact { get; set; }
+        public string DOB { get; set; }
     }
 }
