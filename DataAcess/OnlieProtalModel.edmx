@@ -14,6 +14,7 @@
           <Property Name="PassWord" Type="varchar" MaxLength="255" />
           <Property Name="Contact" Type="int" />
           <Property Name="DOB" Type="varchar" MaxLength="45" />
+          <Property Name="IsDeleted" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityContainer Name="OnlineModelStoreContainer">
           <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
@@ -31,6 +32,7 @@
           <Property Name="PassWord" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Contact" Type="Int32" />
           <Property Name="DOB" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="OnlineEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Registrations" EntityType="Self.Registration" />
@@ -44,6 +46,7 @@
           <EntitySetMapping Name="Registrations">
             <EntityTypeMapping TypeName="OnlineModel.Registration">
               <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Contact" ColumnName="Contact" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

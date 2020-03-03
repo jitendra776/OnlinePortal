@@ -4,10 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using DataAcess;
 
 namespace Online.Controllers
 {
+    [EnableCorsAttribute("http://localhost:4200", "*","*")]
     [RoutePrefix("Api/Register")]
     public class RegistrationController : ApiController
     {
@@ -18,10 +20,13 @@ namespace Online.Controllers
         {
             using (OnlineEntities2 obj = new OnlineEntities2())
             {
-                return Request.CreateResponse(HttpStatusCode.OK, obj.Registrations.ToList());
+                var data = obj.Registrations.ToList().Where(x => x.IsDeleted != "False");
+                return Request.CreateResponse(HttpStatusCode.OK, data);
             }
         }
         #endregion
+
+        //Get with api route
         #region GetBYID
         [HttpGet]
         [Route("GetUserByContact/{contact}/{password}")]
@@ -40,6 +45,8 @@ namespace Online.Controllers
                 return Ok(false);
             }
         }
+
+        // Get with HTTP query string
         [HttpGet]
         [Route("GetUserByID")]
         public HttpResponseMessage GetUserByID(int id)
@@ -53,7 +60,7 @@ namespace Online.Controllers
         #region Add
         [HttpPost]
         [Route("AddUser")]
-        public HttpResponseMessage AddUser([FromBody]Registration data)
+        public HttpResponseMessage AddUser(Registration data)
         {
             using (OnlineEntities2 obj = new OnlineEntities2())
             {
@@ -93,8 +100,10 @@ namespace Online.Controllers
             using (OnlineEntities2 obj = new OnlineEntities2())
             {
                 var data = obj.Registrations.FirstOrDefault(x => x.ID == id);
-                obj.Registrations.Remove(data);
+                data.IsDeleted = "False";
                 obj.SaveChanges();
+                obj.SaveChanges();
+                
                 return Request.CreateResponse(HttpStatusCode.OK, "Added");
             }
         }
